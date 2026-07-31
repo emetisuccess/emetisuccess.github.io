@@ -119,21 +119,21 @@ h6 {
 }
 
 #header .logo {
-  font-size: 30px;
   margin: 0;
   padding: 0;
-  line-height: 1;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-#header .logo a {
-  color: #fff;
+  line-height: 0;
 }
 
 #header .logo img {
-  max-height: 40px;
+  max-height: 56px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 575px) {
+  #header .logo img {
+    max-height: 42px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -288,95 +288,129 @@ h6 {
 @media (max-width: 991px) {
   .mobile-nav-toggle {
     display: block;
+    z-index: 1000;
+    position: relative;
+  }
+
+  .navbar {
+    position: relative;
   }
 
   .navbar ul {
-    display: none;
+    position: fixed;
+    top: 72px;
+    right: -280px;
+    bottom: 0;
+    left: auto;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(40, 58, 90, 0.95);
+    padding: 20px 0;
+    z-index: 999;
+    transition: right 0.3s ease-in-out;
+    list-style: none;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  .navbar.navbar-mobile ul {
+    right: 0;
+  }
+
+  .navbar li {
+    display: block;
   }
 }
 
-.navbar-mobile {
+.navbar.navbar-mobile {
+  position: relative;
+}
+
+.navbar.navbar-mobile::before {
+  content: "";
   position: fixed;
-  overflow: hidden;
-  top: 0;
-  right: 0;
+  top: 72px;
   left: 0;
+  right: 0;
   bottom: 0;
-  background: rgba(40, 58, 90, 0.9);
-  transition: 0.3s;
-  z-index: 999;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
 }
 
-.navbar-mobile .mobile-nav-toggle {
-  position: absolute;
-  top: 15px;
-  right: 15px;
+@media (max-width: 991px) {
+  .navbar.navbar-mobile ul {
+    list-style: none;
+  }
+
+  .navbar.navbar-mobile ul li {
+    display: flex;
+  }
 }
 
-.navbar-mobile ul {
-  display: block;
-  position: absolute;
-  top: 55px;
-  right: 15px;
-  bottom: 15px;
-  left: 15px;
-  padding: 10px 0;
-  border-radius: 10px;
-  background-color: #fff;
-  overflow-y: auto;
-  transition: 0.3s;
+.navbar.navbar-mobile .mobile-nav-toggle {
+  position: relative;
+  z-index: 1001;
 }
 
-.navbar-mobile a,
-.navbar-mobile a:focus {
+.navbar.navbar-mobile a,
+.navbar.navbar-mobile a:focus {
   padding: 10px 20px;
   font-size: 15px;
-  color: #37517e;
+  color: #fff;
 }
 
-.navbar-mobile a:hover,
-.navbar-mobile .active,
-.navbar-mobile li:hover > a {
+.navbar.navbar-mobile a:hover,
+.navbar.navbar-mobile .active,
+.navbar.navbar-mobile li:hover > a {
   color: #47b2e4;
 }
 
-.navbar-mobile .getstarted,
-.navbar-mobile .getstarted:focus {
-  margin: 15px;
-  color: #37517e;
+.navbar.navbar-mobile .getstarted,
+.navbar.navbar-mobile .getstarted:focus {
+  margin: 15px 20px;
+  color: #fff;
+  border-color: #47b2e4;
 }
 
-.navbar-mobile .dropdown ul {
+.navbar.navbar-mobile .getstarted:hover,
+.navbar.navbar-mobile .getstarted:focus:hover {
+  background: #47b2e4;
+  color: #fff;
+}
+
+.navbar.navbar-mobile .dropdown ul {
   position: static;
   display: none;
-  margin: 10px 20px;
+  margin: 10px 0;
   padding: 10px 0;
   z-index: 99;
   opacity: 1;
   visibility: visible;
-  background: #fff;
-  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
-.navbar-mobile .dropdown ul li {
-  min-width: 200px;
+.navbar.navbar-mobile .dropdown ul li {
+  min-width: auto;
 }
 
-.navbar-mobile .dropdown ul a {
+.navbar.navbar-mobile .dropdown ul a {
   padding: 10px 20px;
+  color: #fff;
 }
 
-.navbar-mobile .dropdown ul a i {
+.navbar.navbar-mobile .dropdown ul a i {
   font-size: 12px;
 }
 
-.navbar-mobile .dropdown ul a:hover,
-.navbar-mobile .dropdown ul .active:hover,
-.navbar-mobile .dropdown ul li:hover > a {
+.navbar.navbar-mobile .dropdown ul a:hover,
+.navbar.navbar-mobile .dropdown ul .active:hover,
+.navbar.navbar-mobile .dropdown ul li:hover > a {
   color: #47b2e4;
 }
 
-.navbar-mobile .dropdown > .dropdown-active {
+.navbar.navbar-mobile .dropdown > .dropdown-active {
   display: block;
   visibility: visible !important;
 }
@@ -1936,11 +1970,20 @@ body {
   background: rgba(255, 255, 255, 0.95);
 }
 
-#header .logo a,
 #header .navbar a,
 #header .navbar a:focus,
 .mobile-nav-toggle {
   color: var(--primary-dark);
+}
+
+#footer .footer-logo {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+#footer .footer-logo img {
+  max-height: 72px;
+  width: auto;
 }
 
 .navbar .getstarted,
