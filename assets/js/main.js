@@ -112,39 +112,27 @@
   }
 
   /**
-   * Mobile nav toggle
+   * Close mobile nav after in-page link clicks
    */
-  on("click", ".mobile-nav-toggle", function (e) {
-    e.stopPropagation();
-    select("#navbar").classList.toggle("navbar-mobile");
-    this.classList.toggle("bi-list");
-    this.classList.toggle("bi-x");
-  });
-
-  /**
-   * Close mobile nav when overlay is clicked
-   */
-  document.addEventListener("click", function (e) {
-    let navbar = select("#navbar");
-    if (navbar.classList.contains("navbar-mobile")) {
-      if (
-        !e.target.closest(".navbar ul") &&
-        !e.target.closest(".mobile-nav-toggle")
-      ) {
-        navbar.classList.remove("navbar-mobile");
-        let navbarToggle = select(".mobile-nav-toggle");
-        navbarToggle.classList.remove("bi-x");
-        navbarToggle.classList.add("bi-list");
-      }
+  const closeMobileNav = () => {
+    const panel = select("#mobile-nav-panel");
+    const toggle = select(".mobile-nav-toggle");
+    const icon = toggle ? toggle.querySelector("i") : null;
+    document.body.classList.remove("mobile-nav-active");
+    if (panel) panel.hidden = true;
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+    if (icon) {
+      icon.classList.remove("bi-x");
+      icon.classList.add("bi-list");
     }
-  });
+  };
 
   /**
    * Mobile nav dropdowns activate
    */
   on(
     "click",
-    ".navbar .dropdown > a",
+    ".site-nav .dropdown > a",
     function (e) {
       if (select("#navbar").classList.contains("navbar-mobile")) {
         e.preventDefault();
@@ -164,12 +152,8 @@
       if (select(this.hash)) {
         e.preventDefault();
 
-        let navbar = select("#navbar");
-        if (navbar.classList.contains("navbar-mobile")) {
-          navbar.classList.remove("navbar-mobile");
-          let navbarToggle = select(".mobile-nav-toggle");
-          navbarToggle.classList.toggle("bi-list");
-          navbarToggle.classList.toggle("bi-x");
+        if (document.body.classList.contains("mobile-nav-active")) {
+          closeMobileNav();
         }
         scrollto(this.hash);
       }
